@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://ww4ylpygqexe"]
+
+[ext_resource type="Texture2D" uid="uid://dijph34v33qxj" path="res://Art/white.png" id="1_f7x8n"]
+[ext_resource type="Script" path="res://player.gd" id="1_uycuj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6o7qw"]
+bounce = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vivwq"]
+size = Vector2(15, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yus8j"]
+size = Vector2(16, 16)
+
+[node name="Player" type="RigidBody2D"]
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_6o7qw")
+gravity_scale = 0.0
+lock_rotation = true
+linear_damp = 5.0
+script = ExtResource("1_uycuj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_f7x8n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vivwq")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_yus8j")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

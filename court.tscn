@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcttx7lmhqtdx"]
+
+[ext_resource type="Texture2D" uid="uid://wa1nx2qgqnh" path="res://Art/black.png" id="1_b2yis"]
+[ext_resource type="Script" path="res://court.gd" id="1_kn6fo"]
+[ext_resource type="PackedScene" uid="uid://ww4ylpygqexe" path="res://player.tscn" id="2_hm6h4"]
+[ext_resource type="PackedScene" uid="uid://ct1j1sg566705" path="res://wall.tscn" id="4_kqlxt"]
+[ext_resource type="PackedScene" uid="uid://ba5s7th7bf7fp" path="res://center_line.tscn" id="5_d77pl"]
+[ext_resource type="PackedScene" uid="uid://dl8qqw8tnpim5" path="res://ball_spawner.tscn" id="6_000dx"]
+
+[node name="Court" type="Node2D"]
+script = ExtResource("1_kn6fo")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(574, 325)
+scale = Vector2(615.5, 351)
+texture = ExtResource("1_b2yis")
+region_enabled = true
+region_rect = Rect2(-105.462, -58.4608, 2.02695, 2.16209)
+
+[node name="Player1" parent="." instance=ExtResource("2_hm6h4")]
+unique_name_in_owner = true
+
+[node name="Player2" parent="." instance=ExtResource("2_hm6h4")]
+unique_name_in_owner = true
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="WallTop" parent="Walls" instance=ExtResource("4_kqlxt")]
+position = Vector2(592, 0)
+scale = Vector2(80, 1)
+
+[node name="WallBottom" parent="Walls" instance=ExtResource("4_kqlxt")]
+position = Vector2(593, 648)
+scale = Vector2(80, 1)
+
+[node name="WallLeft" parent="Walls" instance=ExtResource("4_kqlxt")]
+position = Vector2(0, 321)
+rotation = 1.57079
+scale = Vector2(80, 1)
+
+[node name="WallRight" parent="Walls" instance=ExtResource("4_kqlxt")]
+position = Vector2(1152, 316)
+rotation = 1.57079
+scale = Vector2(80, 1)
+
+[node name="CenterLine" parent="." instance=ExtResource("5_d77pl")]
+position = Vector2(569, 316)
+
+[node name="BallSpawner" parent="." instance=ExtResource("6_000dx")]
+unique_name_in_owner = true
+position = Vector2(1, 1)
+
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="GUILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="lbl_Player1Score" type="Label" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 50.0
+offset_top = 20.0
+offset_right = 90.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lbl_Player2Score" type="Label" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1062.0
+offset_top = 20.0
+offset_right = 1102.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="playerDied" from="Player1" to="." method="_on_player_1_player_died"]
+[connection signal="playerDied" from="Player2" to="." method="_on_player_2_player_died"]
